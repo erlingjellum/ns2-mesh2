@@ -142,7 +142,7 @@ struct interf {
 
 class SimplePowerMonitor: public TimerHandler {
 public:
-	SimplePowerMonitor(MacSimpleMesh *m): mac(m) {}
+	SimplePowerMonitor(MacSimpleMesh *m): mac(m), powerLevel(-1) {}
 	void recordPowerLevel(double power, double duration);
 	double getPowerLevel();
 	virtual void expire(Event *);

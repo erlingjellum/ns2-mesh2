@@ -6,7 +6,7 @@
 #include <time.h>
 
 
-const bool DEBUG = true;
+const bool DEBUG = false;
 
 //Binding the c++ class til otcl
 static class MacSimpleMeshClass : public TclClass {
@@ -177,14 +177,12 @@ void MacSimpleMesh::recv(Packet *p, Handler *h){
 				return;
 			}
 		}
-
 		double powerLevel = powerMonitor->getPowerLevel();
-
-
-		if (powerLevel > 0.0) {
-			if (p->txinfo_.RxPr /powerMonitor->getPowerLevel()
+		if (powerLevel > 0) {
+			if ((p->txinfo_.RxPr /powerLevel)
 			< p->txinfo_.CPThresh) {
 				powerMonitor->recordPowerLevel(p->txinfo_.RxPr, txtime(p));
+				printf("**********************Power monitor works: %.10f********************************\n", powerLevel);
 				col_ccrejection++;
 				return;
 			}
@@ -537,5 +535,5 @@ void SimplePowerMonitor::expire(Event *) {
 				}
 			}
 		}
-	} else { powerLevel = 0;}
+	} else { powerLevel = -1;}
 }

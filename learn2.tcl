@@ -1,7 +1,7 @@
 #package require tooltip
 
 set PARAMS_FILE_NAME "params2.txt"
-set NS_EXEC_PATH "/home/user/ns/ns-2.35/nstk"
+set NS_EXEC_PATH "~/root/ns-allinone-2.35/ns-2.35/nstk"
 
 
 # First open params.txt and read all parameters that were set by the GUI
@@ -80,118 +80,121 @@ menu .mbar.fl -tearoff 0
 # Progress bar
 ttk::progressbar .probar -mode determinate -orient horizontal -length 100 -variable gui_progress
 
+# Font
+font create myFont -family Times -size 14 -weight bold
+
 # ALL USER INPUT PARAMETERS
 #####################################################
 
-label .mode_label -text "Simulation Mode"
-ttk::combobox .mode_entry -textvariable param(mode)\
+label .mode_label -font Myfont -text "Simulation Mode"
+ttk::combobox .mode_entry -font myFont -font Myfont -textvariable  param(mode)\
                          -state readonly\
                           -values {"one-to-all" "all-to-one"}\
                           -state readonly
 trace add variable param(mode) write update_mode
 
-label .node_env_label -text "Node Environment" -justify left
-ttk::combobox .node_env_entry -textvariable param(node_env)\
+label .node_env_label -font Myfont -text "Node Environment" -justify left
+ttk::combobox .node_env_entry -font Myfont -textvariable  param(node_env)\
                             -values {"Free-space"}\
                             -state readonly
 
 
-label .show_nam_label -text "Show graphic visualization" -justify left
-ttk::combobox .show_nam_entry -textvariable param(show_nam)\
+label .show_nam_label -font Myfont -text "Show graphic visualization" -justify left
+ttk::combobox .show_nam_entry -font Myfont -textvariable  param(show_nam)\
                                 -state readonly\
                                 -values {"Yes" "No"}
 
-label .num_nodes_x_label -text "Node grid size x \[\]" -justify left
-entry .num_nodes_x_entry  -textvariable param(num_nodes_x)
+label .num_nodes_x_label -font Myfont -text "Node grid size x \[\]" -justify left
+entry .num_nodes_x_entry  -font Myfont -textvariable  param(num_nodes_x)
 trace add variable param(num_nodes_x) write update_node_list
 
-label .num_nodes_y_label -text "Node grid size y \[\]" -justify left
-entry .num_nodes_y_entry -textvariable param(num_nodes_y)
+label .num_nodes_y_label -font Myfont -text "Node grid size y \[\]" -justify left
+entry .num_nodes_y_entry -font Myfont -textvariable  param(num_nodes_y)
 trace add variable param(num_nodes_y) write update_node_list
 
-label .spacing_label -text "Distance between nodes \[m\]" -justify left
-entry .spacing_entry -textvariable param(spacing_m)
+label .spacing_label -font Myfont -text "Distance between nodes \[m\]" -justify left
+entry .spacing_entry -font Myfont -textvariable  param(spacing_m)
 
 
 
-label .traffic_interval_label -text "Traffic Generation Interval \[ms\]" -justify left
-entry .traffic_interval_entry -textvariable param(traffic_interval_ms) -justify left
+label .traffic_interval_label -font Myfont -text "Traffic Generation Interval \[ms\]" -justify left
+entry .traffic_interval_entry -font Myfont -textvariable  param(traffic_interval_ms) -justify left
 
-label .txp_label -text "Advertisment Interval \[ms\]"
-entry .txp_entry -textvariable param(advertisement_interval_ms)
+label .txp_label -font Myfont -text "Advertisment Interval \[ms\]"
+entry .txp_entry -font Myfont -textvariable  param(advertisement_interval_ms)
 
-label .n_packets_label -text "Number of packets sent per node \[\]"
-entry .n_packets_entry -textvariable param(n_packets)
+label .n_packets_label -font Myfont -text "Number of packets sent per node \[\]"
+entry .n_packets_entry -font Myfont -textvariable  param(n_packets)
 
-label .packet_size_label -text "Payload size \[Bytes\]" -justify left
-entry .packet_size_entry -textvariable param(packet_payload_size)
+label .packet_size_label -font Myfont -text "Payload size \[Bytes\]" -justify left
+entry .packet_size_entry -font Myfont -textvariable  param(packet_payload_size)
 
-label .jitter_max_label -text "Max jitter \[ms\]" -justify left
-entry .jitter_max_entry -textvariable param(jitterMax_ms)
+label .jitter_max_label -font Myfont -text "Max jitter \[ms\]" -justify left
+entry .jitter_max_entry -font Myfont -textvariable  param(jitterMax_ms)
 
 
 
-label .node_type_label -text "Node IC" -justify left
-ttk::combobox .node_type_entry -textvariable param(node_type)\
+label .node_type_label -font Myfont -text "Node IC" -justify left
+ttk::combobox .node_type_entry -font Myfont -textvariable  param(node_type)\
                                 -state readonly\
                                 -values {"nRF52"}
 
-label .tx_power_label -text "TX power" -justify left
-ttk::combobox .tx_power_entry -textvariable param(TX_power)\
+label .tx_power_label -font Myfont -text "TX power" -justify left
+ttk::combobox .tx_power_entry -font Myfont -textvariable  param(TX_power)\
                                 -state readonly\
                                 -values {"-4dBm" "0dBm" "+4dBm"}
 
-label .bw_label -text "Bandwidth" -justify left
-ttk::combobox .bw_entry -textvariable param(bandwidth)\
+label .bw_label -font Myfont -text "Bandwidth" -justify left
+ttk::combobox .bw_entry -font Myfont -textvariable  param(bandwidth)\
                         -state readonly\
                         -values {125kb 250kb 1Mb 2Mb}
 
-label .ttl_label -text "TTL \[\]"
-entry .ttl_entry -textvariable param(ttl)
+label .ttl_label -font Myfont -text "TTL \[\]"
+entry .ttl_entry -font Myfont -textvariable  param(ttl)
 
-label .node_cache_size_label -text "Cache size \[n packets\]" -justify left
-entry .node_cache_size_entry -textvariable param(node_cache_size)
-
-
-label .rx_dead_time_label -text "Radio Dead-time after receive \[us\]" -justify left
-entry .rx_dead_time_entry -textvariable param(dead_time_us) -justify left
-
-label .clock_drift_label -text "Clock Drift \[ppm\]"
-entry .clock_drift_entry -textvariable param(clock_drift) -state readonly
-
-label .retransmissions_label -text "Retransmissions"
-entry .retransmissions_entry -textvariable param(retransmissions) -state readonly
-
-label .adv_roles_label -text "Advertisement Roles"
-entry .adv_roles_entry -textvariable param(adv_roles) -state readonly
-
-label .priority_label -text "Priority"
-entry .priority_entry -textvariable param(priority) -state readonly
-
-label .allow_rx_postpone_label -text "Allow RX to postpone Advertisement Window"
-entry .allow_rx_postpone_entry -textvariable param(allow_rx_postpone) -state readonly
+label .node_cache_size_label -font Myfont -text "Cache size \[n packets\]" -justify left
+entry .node_cache_size_entry -font Myfont -textvariable  param(node_cache_size)
 
 
-label .node_select_label -text "Node" -justify left
-ttk::combobox .node_select_entry -textvariable node_select\
+label .rx_dead_time_label -font Myfont -text "Radio Dead-time after receive \[us\]" -justify left
+entry .rx_dead_time_entry -font Myfont -textvariable  param(dead_time_us) -justify left
+
+label .clock_drift_label -font Myfont -text "Clock Drift \[ppm\]"
+entry .clock_drift_entry -font Myfont -textvariable  param(clock_drift) -state readonly
+
+label .retransmissions_label -font Myfont -text "Retransmissions"
+entry .retransmissions_entry -font Myfont -textvariable  param(retransmissions) -state readonly
+
+label .adv_roles_label -font Myfont -text "Advertisement Roles"
+entry .adv_roles_entry -font Myfont -textvariable  param(adv_roles) -state readonly
+
+label .priority_label -font Myfont -text "Priority"
+entry .priority_entry -font Myfont -textvariable  param(priority) -state readonly
+
+label .allow_rx_postpone_label -font Myfont -text "Allow RX to postpone Advertisement Window"
+entry .allow_rx_postpone_entry -font Myfont -textvariable  param(allow_rx_postpone) -state readonly
+
+
+label .node_select_label -font Myfont -text "Node" -justify left
+ttk::combobox .node_select_entry -font Myfont -textvariable  node_select\
                                 -values $node_list\
                                 -state readonly
 trace add variable node_select write update_node_options
 
 
-label .node_master_label -text "Master" -justify left
+label .node_master_label -font Myfont -text "Master" -justify left
 checkbutton .node_master_button -command update_master
 
-label .traffic_generator_label -text "Traffic Generator"
+label .traffic_generator_label -font Myfont -text "Traffic Generator"
 checkbutton .traffic_generator_button -variable traffic_generator
 trace add variable traffic_generator write update_traffic_generators
 
-label .node_relay_label -text "Relay" -justify left
+label .node_relay_label -font Myfont -text "Relay" -justify left
 checkbutton .node_relay_button -variable relay
 trace add variable relay write update_node_relay
 
 
-button .start_button -text "Start" -command "run_ns" 
+button .start_button -font Myfont -text "Start" -command "run_ns" 
 
 
 
@@ -237,7 +240,7 @@ proc update_node_list {name1 name2 op} {
             
         }
 
-    .node_select_entry configure -textvariable node_select\
+    .node_select_entry configure -font Myfont -textvariable  node_select\
                                 -values $node_list\
                                 -state readonly
 
@@ -298,7 +301,7 @@ proc update_mode {name1 nam2 op} {
 proc open_about_window {} {
     toplevel .a
     wm title .a "About"
-    label .a.text -text "BLE Mesh Simulator\nVersion 0.1\nCopyright 2018 Nordic Semiconductor ASA\nSimulates a grid of BLE nodes running the BLE Mesh protocol with NS2" 
+    label .a.text -font Myfont -text "BLE Mesh Simulator\nVersion 0.1\nCopyright 2018 Nordic Semiconductor ASA\nSimulates a grid of BLE nodes running the BLE Mesh protocol with NS2" 
 
     grid .a.text
 }
@@ -470,7 +473,7 @@ proc run_ns {} {
     write_params_to_file
 
     # Create a "Cancel" Button
-    .start_button configure -text Abort -command restart
+    .start_button configure -font Myfont -text Abort -command restart
 
     set MESSAGE_PORT 42 ;# Advertisment message. All Agents are attached to this port of the node.
     # Setting up Pysical Layer properties
@@ -487,7 +490,7 @@ proc run_ns {} {
 
     }
 
-    if {$param(node_env) eq "free-space"} {
+    if {$param(node_env) eq "Free-space"} {
 
 
         set val(prop) [new Propagation/FreeSpace]
@@ -642,7 +645,6 @@ proc run_ns {} {
 
     # Setting up the advertisement packages
 
-
     if {$param(mode) eq "one-to-all"} {
         puts "ONE-TO-ALL"
 
@@ -650,7 +652,12 @@ proc run_ns {} {
             $ns at [expr $i*$param(traffic_interval_ms)/1000] "$a($param(master_index)) schedule-adv $i"
         }
 
-        $ns at 0.0 "$a($param(master_index)) start-adv"
+        for {set j 0} {$j < [expr $param(num_nodes) ]} {incr j} {
+            # Start advertisement
+            $ns at 0.0 "$a($j) start-adv"
+        }
+            
+      
 
 
     } elseif {$param(mode) eq "all-to-one"} {
@@ -698,11 +705,11 @@ proc run_ns {} {
         
         # Disable the buttons and inputs  to inhibit reruns with the current run tim simulator
         disable_gui
-        .start_button configure -text "New Simulation" -command restart
+        .start_button configure -font Myfont -text "New Simulation" -command restart
 
         toplevel .f
         wm title .f "Simulation results"
-        tk::listbox .f.text -yscrollcommand ".f.scroll set" -height 50 -width 100
+        tk::listbox .f.text -font Myfont -yscrollcommand ".f.scroll set" -height 50 -width 100
          #Make a scrollbar
         scrollbar .f.scroll -command ".f.text yview" -orient vertical 
 
@@ -740,7 +747,7 @@ proc run_ns {} {
             
             .f.text insert end "SIMULATION RESULTS:"
             .f.text insert end "Total successful packets from master = $total_success/[expr $param(n_packets)*($param(num_nodes_x)*$param(num_nodes_y)-1)]"
-            .f.text insert end "Total Bandwidth from master =  [expr $total_success*$param(packet_payload_size)*8/($param(traffic_interval_ms)*$param(n_packets))] kbps\n"
+            .f.text insert end "Total Bandwidth from master =  [expr $total_success*$param(packet_payload_size)*8/($param(traffic_interval_ms)*$param(n_packets))] kbps"
 
             for {set i 0} {$i < [expr $param(num_nodes_x)*$param(num_nodes_y)]} {incr i} {
                 .f.text insert end "Master->Node_$i $packets_per_link($i)/$param(n_packets) packets received, Bandwidth = [expr $packets_per_link($i)*$param(packet_payload_size)*8/($param(traffic_interval_ms)*$param(n_packets))] kbps\n"
@@ -782,7 +789,7 @@ proc run_ns {} {
             grid .f.scroll -column 1 -row 0 -sticky ew
 
         if {$param(show_nam) eq "Yes"} {
-            exec  ../../ns/nam-1.15/nam ble-mesh.nam &    
+            exec  /root/ns-allinone-2.35/nam-1.15/nam /root/ns2-mesh2/ble-mesh.nam &    
         }
 
         
@@ -805,7 +812,7 @@ proc run_ns {} {
 
 proc restart {} {
     global NS_EXEC_PATH
-    exec $NS_EXEC_PATH learn2.tcl &
+    exec /root/ns-allinone-2.35/ns-2.35/nstk /root/ns2-mesh2/learn2.tcl &
     exit 0
 }   
 
