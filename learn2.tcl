@@ -33,7 +33,7 @@ set param(node_type) [lindex $param_line [incr i]]
 set param(adv_roles) 1
 set param(retransmissions) 1
 set param(priority) "Original Packets"
-set param(allow_rx_postpone) "Yes"
+set param(allow_rx_postpone) "No"
 
 set param(node_cache_size) [lindex $param_line [incr i]]
 set param(packet_payload_size) [lindex $param_line [incr i]]

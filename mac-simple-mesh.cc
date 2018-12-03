@@ -6,7 +6,7 @@
 #include <time.h>
 
 
-const bool DEBUG = false;
+const bool DEBUG = true;
 
 //Binding the c++ class til otcl
 static class MacSimpleMeshClass : public TclClass {
@@ -165,31 +165,46 @@ void MacSimpleMesh::recv(Packet *p, Handler *h){
 		 */
 
 		// Check the powerMonitor
+		
+		// Check if we are too close to our TX window to accept it
+		if(advTimer->busy()) {
+			if((txtime(p) + (dead_time_us/1e6))>(advTimer->expire())) {
+				if (DEBUG) {
+					printf("MAC_%s dropped incoming packet because too close to TX window\n", name_);
+				}
+				powerMonitor->recordPowerLevel(p->txinfo_.RxPr, txtime(p));
+				col_dead++;
+				return;
+			}
+		}
+
 		double powerLevel = powerMonitor->getPowerLevel();
 
-		if (powerLevel ? p->txinfo_.RxPr /powerMonitor->getPowerLevel()
-			>= p->txinfo_.CPThresh : true) {
-			// New packet is strong enough
-			rx_state_ = MAC_RECV;
-			pktRx_ = p;
-			/* schedule reception of the packet */
-			recvTimer->start(txtime(p));
 
-			if (DEBUG) {
-				printf("MAC_%s receiving, p_%d\n", name_, HDR_CMN(pktRx_)->uid());
-				printf("PM = %.8f, p_%d = %.8f\n", powerMonitor->getPowerLevel(), HDR_CMN(pktRx_)->uid(), pktRx_->txinfo_.RxPr);
-				
-			}
-
-			} else {
-				// Update power monitor 
-				
+		if (powerLevel > 0.0) {
+			if (p->txinfo_.RxPr /powerMonitor->getPowerLevel()
+			< p->txinfo_.CPThresh) {
 				powerMonitor->recordPowerLevel(p->txinfo_.RxPr, txtime(p));
 				col_ccrejection++;
+				return;
 			}
-
-
+		
 		}
+		
+		// New packet is strong enough
+		rx_state_ = MAC_RECV;
+		pktRx_ = p;
+		/* schedule reception of the packet */
+		recvTimer->start(txtime(p));
+
+		if (DEBUG) {
+			printf("MAC_%s receiving, p_%d\n", name_, HDR_CMN(pktRx_)->uid());
+			printf("PM = %.8f, p_%d = %.8f\n", powerMonitor->getPowerLevel(), HDR_CMN(pktRx_)->uid(), pktRx_->txinfo_.RxPr);
+			
+		}
+
+
+	}
 	else if (rx_state_ == MAC_RECV) {
 		/*
 		 * We are receiving a different packet, so decide whether
