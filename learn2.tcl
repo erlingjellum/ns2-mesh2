@@ -679,12 +679,8 @@ proc run_ns {} {
             # Start advertisement
             if {$j != $param(master_index)} {
                 $ns at 0.0 "$a($j) start-adv"
-            }
-            
+            }   
         }
-
-
-
     }
 
     # Finish simulation at the time guaranteed to be past all events
